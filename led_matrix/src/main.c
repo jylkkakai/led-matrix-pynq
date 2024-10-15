@@ -77,7 +77,6 @@ void test() {
 
 void test2() {
 
-  // int x = 0, y = 0;
   int mode = 0;
   uint8_t r = 0, g = 0, b = 0;
   while (1) {
@@ -164,10 +163,39 @@ void test2() {
   }
 }
 
+#define ROWS 8
+#define COLUMNS 8
+
+void draw_column(int column, uint8_t r, uint8_t g, uint8_t b) {
+  for (int y = 0; y < ROWS; y++) {
+    set_pixel(column, y, r, g, b);
+  }
+}
+
+void test3() {
+
+  const int columns = 8;
+  uint8_t colors[COLUMNS] = {0 / 3,   31 / 3,  63 / 3,  95 / 3,
+                             127 / 3, 159 / 3, 191 / 3, 223 / 3};
+  int dirs[COLUMNS] = {1, 1, 1, 1, 1, 1, 1, 1};
+  while (1) {
+
+    for (int i = 0; i < COLUMNS; i++) {
+      draw_column(i, colors[i], colors[i], colors[i]);
+      colors[i] += dirs[i];
+      if (colors[i] >= 255 / 3)
+        dirs[i] = -1;
+      else if (colors[i] <= 0)
+        dirs[i] = 1;
+    }
+    usleep(10000);
+  }
+}
+
 int main() {
   init_platform();
 
-  test2();
+  test3();
   cleanup_platform();
   return 0;
 }
