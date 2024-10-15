@@ -11,3 +11,5 @@ run_on_device:
 
 program_fpga:
 	vivado  -mode tcl -nolog -nojournal -source program_fpga.tcl -tclargs design_1_wrapper_hw_platform_0/design_1_wrapper.bit
+
+run_all: build_src_dbg program_fpga run_on_device

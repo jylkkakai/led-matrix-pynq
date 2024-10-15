@@ -54,8 +54,7 @@
 #include "Pixel.h"
 #include "platform.h"
 
-int main() {
-  init_platform();
+void test() {
 
   int x = 0, y = 0;
   while (1) {
@@ -74,6 +73,101 @@ int main() {
       x++;
     }
   }
+}
+
+void test2() {
+
+  // int x = 0, y = 0;
+  int mode = 0;
+  uint8_t r = 0, g = 0, b = 0;
+  while (1) {
+    for (int x = 0; x < 8; x++) {
+      for (int y = 0; y < 8; y++) {
+        set_pixel(x, y, r, g, b);
+      }
+    }
+    usleep(10000);
+
+    switch (mode) {
+    case 0:
+      r++;
+      g = 0x0;
+      b = 0x0;
+      if (r == 0xff)
+        mode++;
+      break;
+    case 1:
+      r = 0xff;
+      g++;
+      b = 0x0;
+      if (g == 0xff)
+        mode++;
+      break;
+    case 2:
+      r--;
+      g = 0xff;
+      b = 0x0;
+      if (r == 0x0)
+        mode++;
+      break;
+    case 3:
+      r = 0x0;
+      g = 0xff;
+      b++;
+      g = 0xff;
+      if (b == 0xff)
+        mode++;
+      break;
+    case 4:
+      r = 0x0;
+      g--;
+      b = 0xff;
+      if (g == 0x0)
+        mode++;
+      break;
+    case 5:
+      r++;
+      g = 0x0;
+      b = 0xff;
+      if (r == 0xFF)
+        mode++;
+      break;
+    case 6:
+      r = 0xff;
+      g++;
+      b = 0xff;
+      if (g == 0xff)
+        mode++;
+      break;
+    case 7:
+      r = 0xff;
+      g = 0xff;
+      b--;
+      if (b == 0x0)
+        mode++;
+      break;
+    case 8:
+      r--;
+      g = 0xff;
+      b = 0x0;
+      if (r == 0x0)
+        mode++;
+      break;
+    case 9:
+      r = 0x0;
+      g--;
+      b = 0x0;
+      if (g == 0x0)
+        mode = 0;
+      break;
+    }
+  }
+}
+
+int main() {
+  init_platform();
+
+  test2();
   cleanup_platform();
   return 0;
 }
